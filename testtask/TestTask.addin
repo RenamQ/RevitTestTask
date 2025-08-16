@@ -1,0 +1,10 @@
+<RevitAddIns>
+	<AddIn Type="Application">
+		<Name>Test Task</Name>
+		<Assembly>.\TestTask\TestTask.dll</Assembly>
+		<AddInId>E67C73A9-C790-4EF4-9137-0DC44D0A9F1B</AddInId>
+		<FullClassName>TestTask.Model.Application</FullClassName>
+		<VendorId>RenamQ</VendorId>
+		<VendorDescription></VendorDescription>
+	</AddIn>
+</RevitAddIns>
