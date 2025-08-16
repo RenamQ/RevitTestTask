@@ -1,19 +1,12 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls.Ribbon;
-using TestTask.ViewModel;
 
 namespace TestTask.Model
 {
     [Transaction(TransactionMode.Manual)]
 
-    class Application : IExternalApplication
+    public class Application : IExternalApplication
     {
         public Result OnStartup(UIControlledApplication application)
         {
