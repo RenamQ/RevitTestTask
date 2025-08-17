@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Reflection;
 
 namespace TestTask.Model
 {
@@ -12,6 +13,7 @@ namespace TestTask.Model
         {
             try {
                 application.CreateRibbonTab("Тестовое задание");
+                PushButtonData pushButtonData = new("appButton", "Кнопка", Assembly.GetExecutingAssembly().Location, nameof(Command));
                 return Result.Succeeded;
             }
             catch (Exception ex)
