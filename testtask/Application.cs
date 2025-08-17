@@ -15,7 +15,7 @@ namespace TestTask
             application.CreateRibbonTab(tabName);
             RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, "Со смещением");
             var assemblyPath = typeof(Application).Assembly.Location;
-            PushButtonData pushButtonData = new PushButtonData("appButton", "Выбор помещения", assemblyPath, "TestTask.Model.Command");
+            PushButtonData pushButtonData = new PushButtonData("appButton", "Выбор помещения", assemblyPath, "TestTask.Commands.Command");
             PushButton pushButton = ribbonPanel.AddItem(pushButtonData) as PushButton;
             return Result.Succeeded;
         }

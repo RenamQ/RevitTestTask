@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTask" xmlns:viewmodel="clr-namespace:TestTask.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Выбор помещений" />
+        Title="Построение стен"  Height="150" Width="327" ResizeMode="CanMinimize">
+
+    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+        </Grid.ColumnDefinitions>
+        <ComboBox ItemsSource="{Binding Rooms}" DisplayMemberPath="Name" SelectedValuePath="Number" x:Name="RoomComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="22" Grid.ColumnSpan="2"/>
+        <Button Content="Построить" Height="22" Width="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,32,0,0" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

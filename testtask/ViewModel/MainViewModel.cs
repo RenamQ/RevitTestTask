@@ -1,20 +1,32 @@
-﻿namespace TestTask.ViewModel
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using TestTask.Model;
+
+namespace TestTask.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        private string _title = "Plugin";
-        private string _message = "test";
+        public ObservableCollection<RoomModel> Rooms { get; set; }
 
-        public string Title
+        public MainViewModel(Document doc)
         {
-            get => _title;
-            set => SetProperty(ref _title, value);
+            Rooms = new ObservableCollection<RoomModel>(GetAllRooms(doc).Select(room => new RoomModel {
+                Name = room.Name,
+                Number = room.Number
+            }));
         }
 
-        public string Message
+        public List<Room> GetAllRooms(Document doc)
         {
-            get => _message;
-            set => SetProperty(ref _message, value);
+            return new FilteredElementCollector(doc)
+                .OfCategory(BuiltInCategory.OST_Rooms)
+                .WhereElementIsNotElementType()
+                .Cast<Room>()
+                .ToList();
         }
+
     }
 }
