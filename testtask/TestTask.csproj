@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <UseWPF>true</UseWPF>
-    <TargetFramework>net48</TargetFramework>
-  </PropertyGroup>
-
+	<PropertyGroup>
+		<UseWPF>true</UseWPF>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
   <ItemGroup>
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
@@ -15,16 +14,38 @@
       <Private>false</Private>
     </Reference>
   </ItemGroup>
-	<Target Name="CopyToRevit" AfterTargets="Build">
-		<ItemGroup>
-			<FilesToCopy Include=".\.\.\*.addin" />
-		</ItemGroup>
-		<Copy SourceFiles="@(FilesToCopy)" DestinationFolder="C:\ProgramData\Autodesk\Revit\Addins\2022" />
-	</Target>
-	<Target Name="CopyToRevitDLL" AfterTargets="Build">
-		<ItemGroup>
-			<FilesToCopyDLL Include="$(OutputPath)**\*.dll" />
-		</ItemGroup>
-		<Copy SourceFiles="@(FilesToCopyDLL)" DestinationFolder="C:\ProgramData\Autodesk\Revit\Addins\2022\TestTask" />
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="RevitAPI">
+			<HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="RevitAPIUI">
+			<HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="TestTask.addin">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Assets\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<Target Name="PreparePluginFolder" AfterTargets="Build">
+		<MakeDir Directories="$(OutputPath)\Plugin\TestTask" />
+		<Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll" DestinationFolder="$(OutputPath)\Plugin\TestTask" />
+		<Copy SourceFiles="@(Content->'$(OutputPath)\Assets\%(RecursiveDir)%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)\Plugin\TestTask\Assets" />
+		<Copy SourceFiles="$(OutputPath)\TestTask.addin" DestinationFolder="$(OutputPath)\Plugin" />
+		<MakeDir Directories="C:\ProgramData\Autodesk\Revit\Addins\2022\TestTask" />
+		<Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll" DestinationFolder="C:\ProgramData\Autodesk\Revit\Addins\2022\TestTask" />
+		<Copy SourceFiles="@(Content->'$(OutputPath)\Assets\%(RecursiveDir)%(Filename)%(Extension)')" DestinationFolder="C:\ProgramData\Autodesk\Revit\Addins\2022\TestTask\Assets" />
+		<Copy SourceFiles="$(OutputPath)\TestTask.addin" DestinationFolder="C:\ProgramData\Autodesk\Revit\Addins\2022" />
 	</Target>
 </Project>
