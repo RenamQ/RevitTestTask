@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace TestTask
+namespace TestTask.View
 {
     public partial class MainWindow : Window
     {
