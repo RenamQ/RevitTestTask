@@ -5,7 +5,7 @@ using System;
 using TestTask.View;
 using TestTask.ViewModel;
 
-namespace TestTask.Model
+namespace TestTask.Commands
 {
     [Transaction(TransactionMode.Manual)]
 
@@ -16,7 +16,8 @@ namespace TestTask.Model
         {
             try
             {
-                var viewModel = new MainViewModel();
+                Document doc = commandData.Application.ActiveUIDocument.Document;
+                var viewModel = new MainViewModel(doc);
                 var window = new MainWindow
                 {
                     DataContext = viewModel
