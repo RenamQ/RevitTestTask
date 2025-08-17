@@ -11,7 +11,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
         </Grid.ColumnDefinitions>
-        <ComboBox ItemsSource="{Binding Rooms}" DisplayMemberPath="Name" SelectedValuePath="Number" x:Name="RoomComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="22" Grid.ColumnSpan="2"/>
-        <Button Content="Построить" Height="22" Width="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,32,0,0" Grid.ColumnSpan="2"/>
+        <ComboBox ItemsSource="{Binding Rooms}" DisplayMemberPath="Name" SelectedValuePath="Number" x:Name="RoomComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Height="22" Grid.ColumnSpan="2" SelectedItem="{Binding SelectedRoom, Mode=TwoWay}"/>
+        <Button Content="Построить" Command="{Binding BuildWallsCommand}" Height="22" Width="160" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,32,0,0" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

@@ -1,31 +1,48 @@
 ﻿using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using TestTask.Model;
+using TestTask.Commands;
+using System.Windows.Controls;
+using Autodesk.Revit.UI;
+using System.Windows.Input;
+using System;
 
 namespace TestTask.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
         public ObservableCollection<RoomModel> Rooms { get; set; }
-
+        public ICommand BuildWallsCommand { get; }
         public MainViewModel(Document doc)
         {
-            Rooms = new ObservableCollection<RoomModel>(GetAllRooms(doc).Select(room => new RoomModel {
-                Name = room.Name,
-                Number = room.Number
-            }));
+            Rooms = RoomList.GetRooms(doc);
+            BuildWallsCommand = new RelayCommand(BuildWallsExecute, CanBuildWallsExecute);
         }
 
-        public List<Room> GetAllRooms(Document doc)
+        private void BuildWallsExecute(object obj)
         {
-            return new FilteredElementCollector(doc)
-                .OfCategory(BuiltInCategory.OST_Rooms)
-                .WhereElementIsNotElementType()
-                .Cast<Room>()
-                .ToList();
+            var room = SelectedRoom;
+            if (room != null)
+            {
+                var builder = new BuildWalls(room.Room);
+                builder.Execute();
+            }
+        }
+        
+        private bool CanBuildWallsExecute(object arg)
+        {
+            return SelectedRoom != null;
+        }
+
+
+        private RoomModel selectedRoom;
+        public RoomModel SelectedRoom {
+            get => selectedRoom;
+            set
+            {
+                selectedRoom = value;
+                OnPropertyChanged(nameof(SelectedRoom));
+            }
         }
 
     }
